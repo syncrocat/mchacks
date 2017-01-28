@@ -34,11 +34,13 @@ document.addEventListener("click", function(e) {
     if (mode == "tool-none") {
 
     } else if (mode == "tool-set_hidden") {
-      prevDOM.hidden = true;
+        prevDOM.style.opacity = "0";
+    } else if (mode == "tool-set_delete"){
+        prevDOM.hidden = true;
     } else if (mode == "tool-drag_and_drop") {
 
     } else if (mode == "tool-color") {
-      prevDOM.style.color = "purple";
+        prevDOM.style.color = "purple";
     }
   }
 });
@@ -50,9 +52,13 @@ chrome.runtime.onMessage.addListener(function(request) {
   else if (request.msg == "tool-set_hidden") {
     mode = "tool-set_hidden";
   }
+  else if (request.msg == "tool-set_delete") {
+    mode = "tool-set_delete";
+  }
   else if (request.msg == "tool-drag_and_drop") {
     mode = "tool-drag_and_drop";
-  } else if (request.msg == "tool-color") {
+  }
+  else if (request.msg == "tool-color") {
     mode = "tool-color";
   }
 });
