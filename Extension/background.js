@@ -77,6 +77,22 @@ chrome.contextMenus.create({
     sendToContentScript({context: "font", method: "fontName", font: "Courier New"});
   }
 });
+chrome.contextMenus.create({
+  "title": "Times New Roman",
+  "parentId": fontNameParent,
+  "contexts": ["selection"],
+  "onclick": function() {
+    sendToContentScript({context: "font", method: "fontName", font: "Times New Roman"});
+  }
+});
+chrome.contextMenus.create({
+  "title": "Comic Sans MS",
+  "parentId": fontNameParent,
+  "contexts": ["selection"],
+  "onclick": function() {
+    sendToContentScript({context: "font", method: "fontName", font: "Comic Sans MS"});
+  }
+});
 
 var fontSizeParent = chrome.contextMenus.create({
     "title": "Font Size",
