@@ -11,23 +11,27 @@
 
 // Mouse listener for any move event on the current document.
 // document.addEventListener('mousemove', function (e) {
-//   var srcElement = e.srcElement;
+//   if (mode == "tool-none") {
+//     prevDOM = null;
+//   } else {
+//     var srcElement = e.srcElement;
 //
-//   // Lets check if our underlying element is a DIV.
-//   if (srcElement.nodeName == 'DIV') {
+//     // Lets check if our underlying element is a DIV.
+//     if (srcElement.nodeName == 'DIV') {
 //
-//     // For NPE checking, we check safely. We need to remove the class name
-//     // Since we will be styling the new one after.
-//     if (prevDOM != null) {
-//       prevDOM.classList.remove(MOUSE_VISITED_CLASSNAME);
+//       // For NPE checking, we check safely. We need to remove the class name
+//       // Since we will be styling the new one after.
+//       if (prevDOM != null) {
+//         prevDOM.classList.remove(MOUSE_VISITED_CLASSNAME);
+//       }
+//
+//       // Add a visited class name to the element. So we can style it.
+//       srcElement.classList.add(MOUSE_VISITED_CLASSNAME);
+//
+//       // The current element is now the previous. So we can remove the class
+//       // during the next iteration.
+//       prevDOM = srcElement;
 //     }
-//
-//     // Add a visited class name to the element. So we can style it.
-//     srcElement.classList.add(MOUSE_VISITED_CLASSNAME);
-//
-//     // The current element is now the previous. So we can remove the class
-//     // during the next iteration.
-//     prevDOM = srcElement;
 //   }
 // }, false);
 
@@ -147,11 +151,11 @@ function makeEditableOneParam(param1) {
 
 function makeEditableTwoParam(param1, param2) {
   // document.styleWithCss = "on"; //Working on BackColor
-  document.useCSS = "on";//only needed for hiliteColor method
+  document.styleWithCSS = "on";//only needed for hiliteColor method
   document = getEditableDocument();
   document.execCommand(param1, false, param2);
   document.designMode = "off";
-  document.useCSS = "off";
+  //document.styleWithCSS = "o";
   // document.styleWithCss = "off"; //Working on backColor
 }
 
@@ -170,7 +174,25 @@ chrome.runtime.onMessage.addListener(function(request) {
   } else if (request.context == "color") {
     makeEditableTwoParam(request.method, request.color);
   } else if (request.context == "link"){
-    makeEditableTwoParam(request.method, request.link);
+    if (request.mode == "text1") {
+      chrome.storage.local.get("text1", function(data) {
+        console.log("trying to make link");
+        console.log(data.text1);
+        makeEditableTwoParam("createLink", data.text1);
+      });
+    } else if (request.mode == "text2") {
+      chrome.storage.local.get("text2", function(data) {
+        makeEditableTwoParam("createLink", data.text2);
+      });
+    }
+  } else if (request.context == "unlink") {
+    makeEditableOneParam(request.context);
+  } else if (request.context == "delete") {
+    makeEditableOneParam(request.context);
+  } else if (request.context == "undo") {
+    makeEditableOneParam(request.context);
+  } else if (request.context == "redo") {
+    makeEditableOneParam(request.context);
   }
 
   // if (request.method == "colorSelection") {

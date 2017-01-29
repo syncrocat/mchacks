@@ -145,60 +145,11 @@ var colorParent = chrome.contextMenus.create({
   "contexts": ["selection"],
 });
 
-var hiliteColorParent = chrome.contextMenus.create({
-  "title": "Highlight",
-  "parentId": colorParent,
-  "contexts":["selection"],
-});
-var colorList = ["red", "blue", "orange", "purple", "black"];
-chrome.contextMenus.create({
-  "title": "Red",
-  "parentId": hiliteColorParent,
-  "contexts": ["selection"],
-  "onclick": function() {
-    sendToContentScript({context: "color", method: "hiliteColor", color: "red"});
-  }
-});
-chrome.contextMenus.create({
-  "title": "Blue",
-  "parentId": hiliteColorParent,
-  "contexts": ["selection"],
-  "onclick": function() {
-    sendToContentScript({context: "color", method: "hiliteColor", color: "blue"});
-  }
-});
-chrome.contextMenus.create({
-  "title": "Orange",
-  "parentId": hiliteColorParent,
-  "contexts": ["selection"],
-  "onclick": function() {
-    sendToContentScript({context: "color", method: "hiliteColor", color: "orange"});
-  }
-});
-chrome.contextMenus.create({
-  "title": "Purple",
-  "parentId": hiliteColorParent,
-  "contexts": ["selection"],
-  "onclick": function() {
-  sendToContentScript({context: "color", method: "hiliteColor", color: "purple"});
-  }
-});
-chrome.contextMenus.create({
-  "title": "Black",
-  "parentId": hiliteColorParent,
-  "contexts": ["selection"],
-  "onclick": function() {
-    sendToContentScript({context: "color", method: "hiliteColor", color: "black"});
-  }
-});
-
-
 var textColorParent = chrome.contextMenus.create({
   "title": "Text Color",
   "parentId": colorParent,
   "contexts":["selection"],
 });
-var colorList = ["red", "blue", "orange", "purple", "black"];
 chrome.contextMenus.create({
   "title": "Red",
   "parentId": textColorParent,
@@ -240,73 +191,107 @@ chrome.contextMenus.create({
   }
 });
 
-// start on backColor
-//
-// var backgroundColorParent = chrome.contextMenus.create({
-//   "title": "Background Color",
-//   "parentId": colorParent,
-//   "contexts":["selection"],
-// });
-// chrome.contextMenus.create({
-//   "title": "Red",
-//   "parentId": backgroundColorParent,
-//   "contexts": ["selection"],
-//   "onclick": function() {
-//     sendToContentScript({context: "color", method: "backColor", color: "red"});
-//   }
-// });
-// chrome.contextMenus.create({
-//   "title": "Blue",
-//   "parentId": backgroundColorParent,
-//   "contexts": ["selection"],
-//   "onclick": function() {
-//     sendToContentScript({context: "color", method: "backColor", color: "blue"});
-//   }
-// });
-// chrome.contextMenus.create({
-//   "title": "Orange",
-//   "parentId": backgroundColorParent,
-//   "contexts": ["selection"],
-//   "onclick": function() {
-//     sendToContentScript({context: "color", method: "backColor", color: "orange"});
-//   }
-// });
-// chrome.contextMenus.create({
-//   "title": "Purple",
-//   "parentId": backgroundColorParent,
-//   "contexts": ["selection"],
-//   "onclick": function() {
-//   sendToContentScript({context: "color", method: "backColor", color: "purple"});
-//   }
-// });
-// chrome.contextMenus.create({
-//   "title": "Black",
-//   "parentId": backgroundColorParent,
-//   "contexts": ["selection"],
-//   "onclick": function() {
-//     sendToContentScript({context: "color", method: "backColor", color: "black"});
-//   }
-// });
-
+var hiliteColorParent = chrome.contextMenus.create({
+  "title": "Highlight",
+  "parentId": colorParent,
+  "contexts":["selection"],
+});
+chrome.contextMenus.create({
+  "title": "Red",
+  "parentId": hiliteColorParent,
+  "contexts": ["selection"],
+  "onclick": function() {
+    sendToContentScript({context: "color", method: "hiliteColor", color: "red"});
+  }
+});
+chrome.contextMenus.create({
+  "title": "Blue",
+  "parentId": hiliteColorParent,
+  "contexts": ["selection"],
+  "onclick": function() {
+    sendToContentScript({context: "color", method: "hiliteColor", color: "blue"});
+  }
+});
+chrome.contextMenus.create({
+  "title": "Orange",
+  "parentId": hiliteColorParent,
+  "contexts": ["selection"],
+  "onclick": function() {
+    sendToContentScript({context: "color", method: "hiliteColor", color: "orange"});
+  }
+});
+chrome.contextMenus.create({
+  "title": "Purple",
+  "parentId": hiliteColorParent,
+  "contexts": ["selection"],
+  "onclick": function() {
+  sendToContentScript({context: "color", method: "hiliteColor", color: "purple"});
+  }
+});
+chrome.contextMenus.create({
+  "title": "Black",
+  "parentId": hiliteColorParent,
+  "contexts": ["selection"],
+  "onclick": function() {
+    sendToContentScript({context: "color", method: "hiliteColor", color: "black"});
+  }
+});
 
 // Start on link
 var linkParent = chrome.contextMenus.create({
   "title": "Link",
   "contexts":["selection"],
 });
+var addLinkParent = chrome.contextMenus.create({
+  "title": "Add link",
+  "parentId": linkParent,
+  "contexts": ["selection"]
+});
+chrome.contextMenus.create({
+  "title": "Custom text 1",
+  "parentId": addLinkParent,
+  "contexts": ["selection"],
+  "onclick": function() {
+    sendToContentScript({context:"link", mode: "text1"});
+  }
+});
+chrome.contextMenus.create({
+  "title": "Custom text 2",
+  "parentId": addLinkParent,
+  "contexts": ["selection"],
+  "onclick": function() {
+    sendToContentScript({context:"link", mode: "text2"});
+  }
+});
 chrome.contextMenus.create({
   "title": "Remove",
   "parentId": linkParent,
   "contexts":["selection"],
   "onclick": function(){
-    sendToContentScript({context:"link", method:"unLink"})
+    sendToContentScript({context:"unlink"})
   }
 });
-// chrome.contextMenus.create({
-//   "title": "Add Link",
-//   "parentId": linkParent,
-//   "contexts":["selection"],
-//   "onclick": function(){
-//     sendToContentScript({context:"link", method:"createLink"})
-//   }
-// });
+
+chrome.contextMenus.create({
+  "title": "Delete selection",
+  "contexts": ["selection"],
+  "onclick": function() {
+    sendToContentScript({context:"delete"});
+  }
+});
+
+chrome.contextMenus.create({
+  "title": "Undo",
+  "contexts": ["all"],
+  "onclick": function() {
+    sendToContentScript({context:"undo"});
+  }
+});
+
+chrome.contextMenus.create({
+  "title": "Redo",
+  "contexts": ["all"],
+  "onclick": function() {
+    sendToContentScript({context: "redo"});
+  }
+});
