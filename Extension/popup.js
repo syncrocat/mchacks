@@ -1,5 +1,15 @@
 window.onload = function() {
+  document.getElementById("tool-none").classList.add("selected");
   document.getElementById("tool-none").addEventListener("click", function() {
+    var noneButton = document.getElementById("tool-none");
+    noneButton.classList.remove("selected");
+    var hiddenButton = document.getElementById("tool-set_hidden");
+    hiddenButton.classList.remove("selected");
+    var deleteButton = document.getElementById("tool-set_delete");
+    deleteButton.classList.remove("selected");
+    var revealButton = document.getElementById("tool-reveal-hidden");
+    revealButton.classList.remove("selected");
+    document.getElementById("tool-none").classList.add("selected");
     chrome.tabs.query({}, function(tabs) {
       for (var i=0; i<tabs.length; ++i) {
         chrome.tabs.sendMessage(tabs[i].id, {msg: "tool-none"});
@@ -8,6 +18,15 @@ window.onload = function() {
   });
 
   document.getElementById("tool-set_hidden").addEventListener("click", function() {
+    var noneButton = document.getElementById("tool-none");
+    noneButton.classList.remove("selected");
+    var hiddenButton = document.getElementById("tool-set_hidden");
+    hiddenButton.classList.remove("selected");
+    var deleteButton = document.getElementById("tool-set_delete");
+    deleteButton.classList.remove("selected");
+    var revealButton = document.getElementById("tool-reveal-hidden");
+    revealButton.classList.remove("selected");
+    document.getElementById("tool-set_hidden").classList.add("selected");
     chrome.tabs.query({}, function(tabs) {
       for (var i=0; i<tabs.length; ++i) {
         chrome.tabs.sendMessage(tabs[i].id, {msg: "tool-set_hidden"});
@@ -16,6 +35,15 @@ window.onload = function() {
   });
 
   document.getElementById("tool-set_delete").addEventListener("click", function() {
+    var noneButton = document.getElementById("tool-none");
+    noneButton.classList.remove("selected");
+    var hiddenButton = document.getElementById("tool-set_hidden");
+    hiddenButton.classList.remove("selected");
+    var deleteButton = document.getElementById("tool-set_delete");
+    deleteButton.classList.remove("selected");
+    var revealButton = document.getElementById("tool-reveal-hidden");
+    revealButton.classList.remove("selected");
+    document.getElementById("tool-set_delete").classList.add("selected");
     chrome.tabs.query({}, function(tabs) {
       for (var i=0; i<tabs.length; ++i) {
         chrome.tabs.sendMessage(tabs[i].id, {msg: "tool-set_delete"});
@@ -24,6 +52,15 @@ window.onload = function() {
   });
 
   document.getElementById("tool-reveal-hidden").addEventListener("click", function() {
+    var noneButton = document.getElementById("tool-none");
+    noneButton.classList.remove("selected");
+    var hiddenButton = document.getElementById("tool-set_hidden");
+    hiddenButton.classList.remove("selected");
+    var deleteButton = document.getElementById("tool-set_delete");
+    deleteButton.classList.remove("selected");
+    var revealButton = document.getElementById("tool-reveal-hidden");
+    revealButton.classList.remove("selected");
+    document.getElementById("tool-reveal-hidden").classList.add("selected");
     chrome.tabs.query({}, function(tabs) {
       for (var i=0; i<tabs.length; ++i) {
         chrome.tabs.sendMessage(tabs[i].id, {msg: "tool-reveal-hidden"});
