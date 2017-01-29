@@ -146,9 +146,13 @@ function makeEditableOneParam(param1) {
 }
 
 function makeEditableTwoParam(param1, param2) {
+  // document.styleWithCss = "on"; //Working on BackColor
+  document.useCSS = "on";//only needed for hiliteColor method
   document = getEditableDocument();
   document.execCommand(param1, false, param2);
   document.designMode = "off";
+  document.useCSS = "off";
+  // document.styleWithCss = "off"; //Working on backColor
 }
 
 // function makeEditableThreeParam(font) {
@@ -165,6 +169,8 @@ chrome.runtime.onMessage.addListener(function(request) {
     makeEditableTwoParam(request.method, request.font);
   } else if (request.context == "color") {
     makeEditableTwoParam(request.method, request.color);
+  } else if (request.context == "link"){
+    makeEditableTwoParam(request.method, request.link);
   }
 
   // if (request.method == "colorSelection") {
