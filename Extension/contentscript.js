@@ -8,6 +8,7 @@ var MOUSE_VISITED_CLASSNAME = 'crx_mouse_visited';
 var prevDOM = null;
 
 var mode = "tool-none";
+var prevOpacity = null;
 
 //Mouse listener for any move event on the current document.
 document.addEventListener('mousemove', function (e) {
@@ -27,13 +28,34 @@ document.addEventListener('mousemove', function (e) {
       if (prevDOM != null) {
         prevDOM.classList.remove(MOUSE_VISITED_CLASSNAME);
       }
+      if (mode == "tool-reveal-hidden") {
+        if (prevOpacity != null) {
+          // Restore old opacity
+          prevDOM.style.opacity = prevOpacity;
+        }
+        // Save old opacity
+        prevOpacity = srcElement.style.opacity;
+        srcElement.style.opacity = 1;
+      }
+
+      
 
       // Add a visited class name to the element. So we can style it.
       srcElement.classList.add(MOUSE_VISITED_CLASSNAME);
 
+
+
+      // if (prevDOM.style.opacity == "0") {
+      //   prevDOM.style.opacity = ;
+      //   prevDOM.style.opacity = "0";
+      // }
+
+
       // The current element is now the previous. So we can remove the class
       // during the next iteration.
       prevDOM = srcElement;
+      
+      //prevDOM.style.opacity = "0";
     }
   }
 }, false);
@@ -42,7 +64,10 @@ document.addEventListener("click", function(e) {
   if (prevDOM != null) {
     if (mode == "tool-set_hidden") {
         prevDOM.style.opacity = "0";
-    } else if (mode == "tool-set_delete"){
+    } else if (mode == "tool-reveal-hidden"){
+        prevDOM.style.opacity = "1";
+        prevOpacity = null;
+    }else if (mode == "tool-set_delete"){
         prevDOM.hidden = true;
 //     } else if (mode == "tool-drag_and_drop") {
 //        prevDOM.ondragstart="event.dataTransfer.setData('text/plain',null)"
@@ -69,6 +94,9 @@ chrome.runtime.onMessage.addListener(function(request) {
   }
   else if (request.msg == "tool-set_hidden") {
     mode = "tool-set_hidden";
+  }
+  else if (request.msg == "tool-reveal-hidden") {
+    mode = "tool-reveal-hidden";
   }
   else if (request.msg == "tool-set_delete") {
     mode = "tool-set_delete";
