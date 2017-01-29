@@ -31,6 +31,14 @@ window.onload = function() {
     });
   });
 
+  document.getElementById("tool-reveal-hidden").addEventListener("click", function() {
+    chrome.tabs.query({}, function(tabs) {
+      for (var i=0; i<tabs.length; ++i) {
+        chrome.tabs.sendMessage(tabs[i].id, {msg: "tool-reveal-hidden"});
+      }
+    });
+  });
+
   document.getElementById("text-1-button").addEventListener("click", function() {
     var text = document.getElementById("text-1").value;
     chrome.storage.local.set({"text1": text});
