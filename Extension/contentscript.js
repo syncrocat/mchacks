@@ -12,7 +12,10 @@ var mode = "tool-none";
 //Mouse listener for any move event on the current document.
 document.addEventListener('mousemove', function (e) {
   if (mode == "tool-none") {
-    prevDOM = null;
+    if (prevDOM != null) {
+      prevDOM.classList.remove(MOUSE_VISITED_CLASSNAME);
+      prevDOM = null;
+    }
   } else {
     var srcElement = e.srcElement;
 
@@ -195,6 +198,16 @@ chrome.runtime.onMessage.addListener(function(request) {
     }
   } else if (request.context == "unlink") {
     makeEditableOneParam(request.context);
+  } else if (request.context == "insertText") {
+    if (request.mode == "text1") {
+      chrome.storage.local.get("text1", function(data) {
+        makeEditableTwoParam("insertText", data.text1);
+      });
+    } else if (request.mode == "text2") {
+      chrome.storage.local.get("text2", function(data) {
+        makeEditableTwoParam("insertText", data.text2);
+      });
+    }
   } else if (request.context == "delete") {
     makeEditableOneParam(request.context);
   } else if (request.context == "undo") {

@@ -280,6 +280,28 @@ chrome.contextMenus.create({
   }
 });
 
+var insertParent = chrome.contextMenus.create({
+  "title": "Insert Text",
+  "contexts": ["all"],
+
+});
+chrome.contextMenus.create({
+  "title": "Custom text 1",
+  "parentId": insertParent,
+  "contexts": ["all"],
+  "onclick": function() {
+    sendToContentScript({context: "insertText", mode: "text1"});
+  }
+});
+chrome.contextMenus.create({
+  "title": "Custom text 2",
+  "parentId": insertParent,
+  "contexts": ["all"],
+  "onclick": function() {
+    sendToContentScript({context: "insertText", mode: "text2"});
+  }
+});
+
 chrome.contextMenus.create({
   "title": "Undo",
   "contexts": ["all"],
