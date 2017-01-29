@@ -2,3 +2,11 @@
   background-color: #bcd5eb !important;
   outline: 1px solid #5166bb !important;
 }
+
+.colored {
+  color: red;
+}
+
+.black {
+  color: black;
+}
