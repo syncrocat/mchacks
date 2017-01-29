@@ -2,8 +2,6 @@
 // Unique ID for the className.
 var MOUSE_VISITED_CLASSNAME = 'crx_mouse_visited';
 
-// chrome.runtime.sendMessage({method: 'asdf'});
-
 //Previous dom, that we want to track, so we can remove the previous styling.
 var prevDOM = null;
 
@@ -38,24 +36,12 @@ document.addEventListener('mousemove', function (e) {
         srcElement.style.opacity = 1;
       }
 
-      
-
       // Add a visited class name to the element. So we can style it.
       srcElement.classList.add(MOUSE_VISITED_CLASSNAME);
-
-
-
-      // if (prevDOM.style.opacity == "0") {
-      //   prevDOM.style.opacity = ;
-      //   prevDOM.style.opacity = "0";
-      // }
-
 
       // The current element is now the previous. So we can remove the class
       // during the next iteration.
       prevDOM = srcElement;
-      
-      //prevDOM.style.opacity = "0";
     }
   }
 }, false);
@@ -69,21 +55,6 @@ document.addEventListener("click", function(e) {
         prevOpacity = null;
     }else if (mode == "tool-set_delete"){
         prevDOM.hidden = true;
-//     } else if (mode == "tool-drag_and_drop") {
-//        prevDOM.ondragstart="event.dataTransfer.setData('text/plain',null)"
-//        prevDOM.draggable="true";
-//     } else if (mode == "tool-color") {
-//         prevDOM.style.color = "purple";
-//     }
-    }else if (mode == "tool-cat"){
-      var cat = document.createElement("DIV");
-      cat.setAttribute("width", prevDOM.offsetWidth);
-      cat.setAttribute("height", prevDOM.offsetHeight);
-      cat.setAttribute("background-color", "red");
-      cat.setAttribute("background-image", "url('https://s-media-cache-ak0.pinimg.com/originals/c2/48/36/c24836d55ec95a86f1bda1b42b2297c0.jpg')");
-      cat.setAttribute("background-size", "cover");
-      prevDOM.parentNode.insertBefore(cat, prevDOM);
-      prevDOM.parentNode.removeChild(prevDOM);
     }
   }
 });
@@ -101,70 +72,8 @@ chrome.runtime.onMessage.addListener(function(request) {
   else if (request.msg == "tool-set_delete") {
     mode = "tool-set_delete";
   }
-  // else if (request.msg == "tool-drag_and_drop") {
-  //   mode = "tool-drag_and_drop";
-  // }
-  else if (request.msg == "tool-cat") {
-    mode = "tool-cat";
-  }
 });
-//
-// document.addEventListener("drag", function( event ) {
-//
-// }, false);
-//
-//   document.addEventListener("dragstart", function( event ) {
-//       // store a ref. on the dragged elem
-//       dragged = event.target;
-//       // make it half transparent
-//       event.target.style.opacity = .5;
-//   }, false);
-//
-//   document.addEventListener("dragend", function( event ) {
-//       // reset the transparency
-//       event.target.style.opacity = "";
-//   }, false);
-//
-//   /* events fired on the drop targets */
-//   document.addEventListener("dragover", function( event ) {
-//       // prevent default to allow drop
-//       event.preventDefault();
-//   }, false);
-//
-//   document.addEventListener("dragenter", function( event ) {
-//       // highlight potential drop target when the draggable element enters it
-//       if (prevTarget != null) {
-//         prevTarget.classList.remove(MOUSE_VISITED_CLASSNAME);
-//       }
-//       event.target.classList.add(MOUSE_VISITED_CLASSNAME);
-//       prevTarget = event.target
-//
-//   }, false);
-//
-//   document.addEventListener("dragleave", function( event ) {
-//       // reset background of potential drop target when the draggable element leaves it
-//       if (prevTarget != null) {
-//         prevTarget.classList.remove(MOUSE_VISITED_CLASSNAME);
-//       }
-//       event.target.classList.add(MOUSE_VISITED_CLASSNAME);
-//       prevTarget = event.target
-//   }, false);
-//
-//   document.addEventListener("drop", function( event ) {
-//       // prevent default action (open as link for some elements)
-//       event.preventDefault();
-//       // move dragged elem to the selected drop target
-//           event.target.style.background = "";
-//           dragged.parentNode.removeChild( dragged );
-//           event.target.appendChild( dragged );
-//
-//   }, false);
-//
-// function setTextColor(color) {
-//   if (prevDOM != null) {
-//
-//   }
-// }
+
 function getEditableDocument() {
   var range, sel = window.getSelection();
   if (sel.rangeCount && sel.getRangeAt) {
@@ -180,32 +89,18 @@ function getEditableDocument() {
 
 function makeEditableOneParam(param1) {
     document = getEditableDocument();
-    // Use HiliteColor since some browsers apply BackColor to the whole block
-    // if (!document.execCommand("HiliteColor", false, colour)) {
-    //     document.execCommand("BackColor", false, colour);
-    // }
     document.execCommand(param1, false);
     document.designMode = "off";
 }
 
 function makeEditableTwoParam(param1, param2) {
-  // document.styleWithCss = "on"; //Working on BackColor
-  document.styleWithCSS = "on";//only needed for hiliteColor method
+  document.styleWithCSS = "on";
   document = getEditableDocument();
   document.execCommand(param1, false, param2);
   document.designMode = "off";
-  //document.styleWithCSS = "o";
-  // document.styleWithCss = "off"; //Working on backColor
 }
 
-// function makeEditableThreeParam(font) {
-//   document = getEditableDocument();
-//   document.execCommand(font, false,
-// }
-
 chrome.runtime.onMessage.addListener(function(request) {
-  // console.log("Saw something");
-  // {context: "styling", style: "bold"}
   if (request.context == "styling") {
     makeEditableOneParam(request.style);
   } else if (request.context == "font") {
@@ -243,8 +138,4 @@ chrome.runtime.onMessage.addListener(function(request) {
   } else if (request.context == "redo") {
     makeEditableOneParam(request.context);
   }
-
-  // if (request.method == "colorSelection") {
-  //   makeEditableAndColor(request.color);
-  // }
 });

@@ -23,14 +23,6 @@ window.onload = function() {
     });
   });
 
-  document.getElementById("tool-cat").addEventListener("click", function() {
-    chrome.tabs.query({}, function(tabs) {
-      for (var i=0; i<tabs.length; ++i) {
-        chrome.tabs.sendMessage(tabs[i].id, {msg: "tool-cat"});
-      }
-    });
-  });
-
   document.getElementById("tool-reveal-hidden").addEventListener("click", function() {
     chrome.tabs.query({}, function(tabs) {
       for (var i=0; i<tabs.length; ++i) {
@@ -63,12 +55,3 @@ window.onload = function() {
       document.getElementById("text-2").value = data.text2;
   });
 }
-
-
-
-
-// function updateText2() {
-//   var text = document.getElementById("text-2").innerText;
-//   chrome.storage.local.set({"text2": text});
-//   console.log("updated text2");
-// }
