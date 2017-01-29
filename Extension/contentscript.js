@@ -111,6 +111,8 @@ chrome.runtime.onMessage.addListener(function(request) {
     makeEditableOneParam(request.style);
   } else if (request.context == "font") {
     makeEditableTwoParam(request.method, request.font);
+  } else if (request.context == "color") {
+    makeEditableTwoParam(request.method, request.color);
   }
 
   // if (request.method == "colorSelection") {

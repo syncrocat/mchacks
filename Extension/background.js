@@ -7,11 +7,6 @@ function sendToContentScript(params) {
   );
 }
 
-var mainParent = chrome.contextMenus.create({
-  "title": "Happy Fruit",
-  "contexts": ["all"]
-});
-
 var stylingParent = chrome.contextMenus.create({
   "title": "Styling",
   "contexts": ["selection"]
@@ -82,20 +77,22 @@ chrome.contextMenus.create({
     sendToContentScript({context: "font", method: "fontName", font: "Courier New"});
   }
 });
-// var colorParent = chrome.contextMenus.create({
-//   "title": "Color text selection",
-//   "contexts": ["selection"],
-// });
+
+
+var colorParent = chrome.contextMenus.create({
+  "title": "Color text selection",
+  "contexts": ["selection"],
+});
 //
-// var colorList = ["red", "blue", "orange", "purple", "black"];
-// chrome.contextMenus.create({
-//   "title": "Red",
-//   "parentId": colorParent,
-//   "contexts": ["selection"],
-//   "onclick": function() {
-//     colorSelectedText("red");
-//   }
-// });
+var colorList = ["red", "blue", "orange", "purple", "black"];
+chrome.contextMenus.create({
+  "title": "Red",
+  "parentId": colorParent,
+  "contexts": ["selection"],
+  "onclick": function() {
+    sendToContentScript({context: "color", method: "foreColor", color: "red"});
+  }
+});
 // chrome.contextMenus.create({
 //   "title": "Blue",
 //   "parentId": colorParent,
