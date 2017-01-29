@@ -23,18 +23,10 @@ window.onload = function() {
     });
   });
 
-  document.getElementById("tool-drag_and_drop").addEventListener("click", function() {
+  document.getElementById("tool-cat").addEventListener("click", function() {
     chrome.tabs.query({}, function(tabs) {
       for (var i=0; i<tabs.length; ++i) {
-        chrome.tabs.sendMessage(tabs[i].id, {msg: "tool-drag_and_drop"});
-      }
-    });
-  });
-
-  document.getElementById("tool-color").addEventListener("click", function() {
-    chrome.tabs.query({}, function(tabs) {
-      for (var i=0; i<tabs.length; ++i) {
-        chrome.tabs.sendMessage(tabs[i].id, {msg: "tool-color"});
+        chrome.tabs.sendMessage(tabs[i].id, {msg: "tool-cat"});
       }
     });
   });
