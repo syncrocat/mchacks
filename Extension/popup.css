@@ -1,4 +1,17 @@
 body {
-  width: 500px;
+  width: 200px;
   height: 500px;
+}
+
+header{
+  font: 20;
+  color: "DarkBlue";
+  border-bottom-style: solid;
+}
+
+button.page {
+  color: "DarkBlue";
+  text-align: center;
+  margin: 10px 0 0 0;
+  width: 180px;
 }
