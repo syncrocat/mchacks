@@ -70,28 +70,50 @@
 //
 //   }
 // }
+function getEditableDocument() {
+  var range, sel = window.getSelection();
+  if (sel.rangeCount && sel.getRangeAt) {
+      range = sel.getRangeAt(0);
+  }
+  document.designMode = "on";
+  if (range) {
+      sel.removeAllRanges();
+      sel.addRange(range);
+  }
+  return document;
+}
 
-function makeEditableAndColor(color) {
-    var range, sel = window.getSelection();
-    if (sel.rangeCount && sel.getRangeAt) {
-        range = sel.getRangeAt(0);
-    }
-    document.designMode = "on";
-    if (range) {
-        sel.removeAllRanges();
-        sel.addRange(range);
-    }
+function makeEditableOneParam(param1) {
+    document = getEditableDocument();
     // Use HiliteColor since some browsers apply BackColor to the whole block
     // if (!document.execCommand("HiliteColor", false, colour)) {
     //     document.execCommand("BackColor", false, colour);
     // }
-    document.execCommand("ForeColor", false, color);
+    document.execCommand(param1, false);
     document.designMode = "off";
 }
 
+function makeEditableTwoParam(param1, param2) {
+  document = getEditableDocument();
+  document.execCommand(param1, false, param2);
+  document.designMode = "off";
+}
+
+// function makeEditableThreeParam(font) {
+//   document = getEditableDocument();
+//   document.execCommand(font, false,
+// }
+
 chrome.runtime.onMessage.addListener(function(request) {
   // console.log("Saw something");
-  if (request.method == "colorSelection") {
-    makeEditableAndColor(request.color);
+  // {context: "styling", style: "bold"}
+  if (request.context == "styling") {
+    makeEditableOneParam(request.style);
+  } else if (request.context == "font") {
+    makeEditableTwoParam(request.method, request.font);
   }
+
+  // if (request.method == "colorSelection") {
+  //   makeEditableAndColor(request.color);
+  // }
 });
