@@ -1,10 +1,8 @@
-function getSelectedText() {
+function colorSelectedText(col) {
   chrome.tabs.query(
     {active: true},
     function(tabs) {
-      console.log("Made it here!");
-      console.log(tabs[0].id);
-      chrome.tabs.sendMessage(tabs[0].id, {method: "getSelection"});
+      chrome.tabs.sendMessage(tabs[0].id, {method: "colorSelection", color: col});
     }
   )
 }
@@ -23,9 +21,44 @@ var colorParent = chrome.contextMenus.create({
   "contexts": ["selection"],
 });
 
-var colorOrange = chrome.contextMenus.create({
+var colorList = ["red", "blue", "orange", "purple", "black"];
+chrome.contextMenus.create({
+  "title": "Red",
+  "parentId": colorParent,
+  "contexts": ["selection"],
+  "onclick": function() {
+    colorSelectedText("red");
+  }
+});
+chrome.contextMenus.create({
+  "title": "Blue",
+  "parentId": colorParent,
+  "contexts": ["selection"],
+  "onclick": function() {
+    colorSelectedText("blue");
+  }
+});
+chrome.contextMenus.create({
   "title": "Orange",
   "parentId": colorParent,
   "contexts": ["selection"],
-  "onclick": getSelectedText
+  "onclick": function() {
+    colorSelectedText("orange");
+  }
+});
+chrome.contextMenus.create({
+  "title": "Purple",
+  "parentId": colorParent,
+  "contexts": ["selection"],
+  "onclick": function() {
+    colorSelectedText("purple");
+  }
+});
+chrome.contextMenus.create({
+  "title": "Black",
+  "parentId": colorParent,
+  "contexts": ["selection"],
+  "onclick": function() {
+    colorSelectedText("black");
+  }
 });

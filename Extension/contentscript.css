@@ -3,8 +3,20 @@
   outline: 1px solid #5166bb !important;
 }
 
-.colored {
+.red {
   color: red;
+}
+
+.blue {
+  color: blue;
+}
+
+.orange {
+  color: orange;
+}
+
+.purple {
+  color: purple;
 }
 
 .black {
